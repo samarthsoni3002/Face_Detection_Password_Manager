@@ -62,5 +62,5 @@ cv2.destroyAllWindows()
 print("Found Name:", found_name)
 
 if(found_name == "Khushi"):
-    print("So Beautiful, So elegant just looking like a WOW!!!")
+    print("Worked")
     
