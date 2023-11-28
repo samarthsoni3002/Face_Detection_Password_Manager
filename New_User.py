@@ -6,19 +6,29 @@ import numpy as np
 from PIL import Image, ImageTk
 import datetime
 import os
+import random
+import string
+import pandas 
 
 
 
+
+
+
+def generate_random_word(length):
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for _ in range(length))
 
 
 def open_photo_window():
     def save_image():
         name = firstName_entry.get()
         username = emailName_entry.get()
+        key = generate_random_word(random.randint(5,10))
 
         with open('user_data.csv', 'a', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow([name, username])
+            writer.writerow([name, username,key])
 
         photo_directory = "./photos/"
         os.makedirs(photo_directory, exist_ok=True)

@@ -4,23 +4,37 @@ from PIL import Image, ImageTk
 import csv
 import cv2
 import os
+import random
+import string
+
+
+def generate_random_word(length):
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for _ in range(length))
 
 
 def login_page():
     login_window = Toplevel(root)
     login_window.title("Login")
     login_window.geometry("960x540")
-    # Add your login page content here
+    
 
 
 def open_photo_window(signup_window, first_name_entry, email_entry):
     def save_image(img1):
         name = first_name_entry.get()
         username = email_entry.get()
+        key = random.randint(15,25)
+
+        header = ['Name', 'Username', 'Key']
 
         with open('user_data.csv', 'a', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow([name, username])
+            file_empty = file.tell() == 0
+            if file_empty:
+                writer.writerow(header)
+            writer.writerow([name, username,key])
+
 
         photo_directory = "./photos/"
         os.makedirs(photo_directory, exist_ok=True)
