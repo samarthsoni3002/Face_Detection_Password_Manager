@@ -14,6 +14,7 @@ def open_photo_window():
         image = Image.fromarray(img1)
         time = str(datetime.datetime.now().today()).replace(":"," ")+".jpg"
         image.save(time)
+        photo.destroy()
 
 
 
