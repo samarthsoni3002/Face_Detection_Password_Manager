@@ -1,3 +1,3 @@
-Name,Username,Key
-Samarth,samama11111,15
-Khushi,khushi11,24
+Name,Username,Key,password_0,password_1,password_2,password_3
+Samarth,samama11111,15,NULL,NULL,NULL,NULL
+Khushi,khushi11,24,NULL,NULL,NULL,NULL

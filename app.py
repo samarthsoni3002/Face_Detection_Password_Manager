@@ -25,15 +25,19 @@ def open_photo_window(signup_window, first_name_entry, email_entry):
         name = first_name_entry.get()
         username = email_entry.get()
         key = random.randint(15,25)
+        pass0 = "NULL"
+        pass1 = "NULL"
+        pass2 = "NULL"
+        pass3 = "NULL"
 
-        header = ['Name', 'Username', 'Key']
+        header = ['Name', 'Username', 'Key',"Password_0,Password_1,Password_2,Password_3"]
 
         with open('user_data.csv', 'a', newline='') as file:
             writer = csv.writer(file)
             file_empty = file.tell() == 0
             if file_empty:
                 writer.writerow(header)
-            writer.writerow([name, username,key])
+            writer.writerow([name, username,key,pass0,pass1,pass2,pass3])
 
 
         photo_directory = "./photos/"
