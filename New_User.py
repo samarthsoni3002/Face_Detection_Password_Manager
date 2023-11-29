@@ -5,16 +5,39 @@ import cv2
 import numpy as np
 from PIL import Image, ImageTk
 import datetime
+import os
+import random
+import string
+import pandas 
+
+
+
+
+
+
+def generate_random_word(length):
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for _ in range(length))
 
 
 def open_photo_window():
-
     def save_image():
+        name = firstName_entry.get()
+        username = emailName_entry.get()
+        key = generate_random_word(random.randint(5,10))
+
+        with open('user_data.csv', 'a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow([name, username,key])
+
+        photo_directory = "./photos/"
+        os.makedirs(photo_directory, exist_ok=True)
+        photo_path = os.path.join(photo_directory, f"{username}.jpg")
+        
         image = Image.fromarray(img1)
-        time = str(datetime.datetime.now().today()).replace(":"," ")+".jpg"
-        image.save(time)
-
-
+        image.save(photo_path)
+        photo.destroy() 
+        root.destroy() 
 
     photo = Toplevel(root)
     photo.title("Camera")
@@ -25,14 +48,13 @@ def open_photo_window():
     L1 = Label(frame)
     L1.pack()
 
-    Button(photo,text="Click and Save",command=save_image, bg = "#3498db", fg="white", padx=10, pady=5, relief="raised", font=("Arial", 12), cursor="hand2").pack()
+    Button(photo, text="Click and Save", command=save_image, bg="#3498db", fg="white", padx=10, pady=5, relief="raised", font=("Arial", 12), cursor="hand2").pack()
 
     video = cv2.VideoCapture(0)
 
-
     while True:
         img = video.read()[1]
-        img1 = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+        img1 = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
         img = ImageTk.PhotoImage(Image.fromarray(img1))
     
@@ -43,13 +65,10 @@ def open_photo_window():
     video.release()
 
 
-
-
 root = Tk()
 root.title("Sign Up")
 root.geometry("960x540") 
 
-# ================Background Image ====================
 original_image = Image.open("./bg/photo2.png")  
 resized_image = original_image.resize((960, 540), Image.LANCZOS)  
 backgroundImage = ImageTk.PhotoImage(resized_image)
@@ -59,7 +78,8 @@ bg_image = Label(
     bg="#272A37"
 )
 bg_image.place(x=0, y=0)
-# ================ CREATE ACCOUNT HEADER ====================
+
+
 createAccount_header = Label(
     bg_image,
     text="Create new account",
@@ -69,7 +89,7 @@ createAccount_header = Label(
 )
 createAccount_header.place(x=75, y=80)
 
-# ================ ALREADY HAVE AN ACCOUNT TEXT ====================
+
 text = Label(
     bg_image,
     text="Already a member?",
@@ -79,7 +99,7 @@ text = Label(
 )
 text.place(x=75, y=157)
 
-# ================ GO TO LOGIN ====================
+
 switchLogin = Button(
     bg_image,
     text="Login",
@@ -93,8 +113,8 @@ switchLogin = Button(
 )
 switchLogin.place(x=230, y=153, width=50, height=35)
 
-# ================ First Name Section ====================
-firstName_image = PhotoImage(file="assets\\input_img.png")
+
+firstName_image = PhotoImage(file="./assets/input_img.png")
 firstName_image_Label = Label(
     bg_image,
     image=firstName_image,
@@ -111,7 +131,7 @@ firstName_text = Label(
 )
 firstName_text.place(x=25, y=0)
 
-firstName_icon = PhotoImage(file="assets\\name_icon.png")
+firstName_icon = PhotoImage(file="./assets/name_icon.png")
 firstName_icon_Label = Label(
     firstName_image_Label,
     image=firstName_icon,
@@ -129,8 +149,8 @@ firstName_entry = Entry(
 )
 firstName_entry.place(x=8, y=17, width=140, height=27)
 
-# ================ Email Name Section ====================
-emailName_image = PhotoImage(file="assets\\email.png")
+
+emailName_image = PhotoImage(file="./assets/email.png")
 emailName_image_Label = Label(
     bg_image,
     image=emailName_image,
@@ -140,14 +160,14 @@ emailName_image_Label.place(x=80, y=311)
 
 emailName_text = Label(
     emailName_image_Label,
-    text="Email account",
+    text="Username",
     fg="#FFFFFF",
     font=("yu gothic ui SemiBold", 13 * -1),
     bg="#3D404B"
 )
 emailName_text.place(x=25, y=0)
 
-emailName_icon = PhotoImage(file="assets\\email-icon.png")
+emailName_icon = PhotoImage(file="./assets/email-icon.png")
 emailName_icon_Label = Label(
     emailName_image_Label,
     image=emailName_icon,
@@ -165,9 +185,9 @@ emailName_entry = Entry(
 )
 emailName_entry.place(x=8, y=17, width=354, height=27)
 
-# =============== Photo & Submit Button ====================
+
 photo_buttonImage = PhotoImage(
-    file="assets\\submit.png")
+    file="./assets/submit.png")
 photo_button = Button(
     bg_image,
     image=photo_buttonImage,

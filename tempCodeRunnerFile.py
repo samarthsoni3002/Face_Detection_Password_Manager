@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import tkinter as tk
 import random
 
@@ -54,3 +55,7 @@ e.pack()
 e.focus_set()
 
 root.mainloop()
+=======
+result_label = tk.Label(final_login, text="", font=("Helvetica", 14))
+    result_label.grid(row=final_login.grid_size()[1], column=0, columnspan=2, pady=20)
+>>>>>>> 63aea72b687bb7c39e0cc40564777c3ab4dc8237
