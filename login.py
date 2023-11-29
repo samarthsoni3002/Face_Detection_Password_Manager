@@ -3,13 +3,18 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox, Toplevel
 import pandas as pd
-#import face_recognition
+import face_recognition
 import cv2
 import numpy as np
 from ceaser_cipher import encrypt_caesar_cipher, decrypt_caesar_cipher
 from PIL import Image, ImageTk
 
 user_passwords = {}
+
+
+def logout(login):
+    login.destroy()
+
 
 def decryption(username,label1):
 
@@ -36,15 +41,26 @@ def decrypt_text(username):
     decrypt.title("Login")
     decrypt.geometry("960x540")
 
+    bg_image_1 = Image.open("./bg/photo3.png")
+    bg_resized = bg_image_1.resize((960, 540), Image.ANTIALIAS)
+    global bg_photo_2
+    bg_photo_2 = ImageTk.PhotoImage(bg_resized)
 
-    label1 = tk.Label(decrypt, text="Site To Decrypt")
-    label1.grid(row=1, column=0, padx=10, pady=10, sticky=tk.W)
+    bg_label = Label(decrypt, image=bg_photo_2)
+    bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+    name_label = tk.Label(decrypt, text=f"Site To Decrypt", font=("Times New Roman", 30))
+    name_label.place(x=370, y=200)
 
     label1 = tk.Entry(decrypt)
-    label1.grid(row=1, column=1, padx=10, pady=10)
+    label1.place(x=420,y=284)
 
-    decrypt_button = tk.Button(decrypt, text="Decrypt", command=lambda: decryption(username,label1))
-    decrypt_button.grid(row=decrypt.grid_size()[1] + 1, column=0, columnspan=2, pady=20)
+
+    button = Button(
+        decrypt,text="Decrypt",command = lambda: decryption(username,label1),font=(30)
+    )
+    
+    button.place(x=450,y=324)   
 
 
 def face_detection_second(username):
@@ -115,9 +131,6 @@ def face_detection_second(username):
 
 
 
-
-
-
 def encrypt_pass(username, site_name_entry, result_label, password_entry, new_password_window):
     site_name = site_name_entry.get()
     password_entry = password_entry.get()
@@ -132,7 +145,7 @@ def encrypt_pass(username, site_name_entry, result_label, password_entry, new_pa
         user_passwords[username] = [(site_name, encrypt_caesar_cipher(password_entry, s))]
 
     result_label.config(text=f"Site Name: {site_name}, Password: {user_passwords[username][-1][1]}")
-    #result_label.place(x=70, y=50)
+   
    
     new_password_window.destroy()
 
@@ -190,7 +203,7 @@ def welcome_login_page(username):
     decrypt_button = tk.Button(final_login, text="Decrypt", command=lambda: face_detection_second(username),font=("Times New Roman", 14))
     decrypt_button.place(x=605, y=10)
 
-    logout_button = tk.Button(final_login, text="Logout", command=lambda: face_detection_second(username),font=("Times New Roman", 14))
+    logout_button = tk.Button(final_login, text="Logout", command=lambda: logout(final_login),font=("Times New Roman", 14))
     logout_button.place(x=870, y=10)
 
 
@@ -294,7 +307,7 @@ photo_button = Button(
         relief="flat",
         activebackground="#272A37",
         cursor="hand2",
-        command=welcome_login_page("samama11111"))
+        command=face_detection)
 photo_button.place(relx=0.5, rely=0.6, anchor="center")
 
 login.mainloop()
